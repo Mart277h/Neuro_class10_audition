@@ -1,0 +1,64 @@
+---
+title: "Dichotic_analysis"
+author: "Johanne Nedergård"
+date: "16/4/2020"
+output: pdf_document
+---
+
+```{r}
+
+# code borrowed from Mikkel Wallentin
+
+#setwd("/Users/au651723/OneDrive_Aarhus_universitet/Aarhus/Intro_Cog_Neuro/Class_160420")
+library(readxl)
+dichotic <- read.csv("Dichotic listening CogSci spring 2020-2.csv") # change the directory to wherever you saved the xlsx file
+
+dichotic$ID<-1:dim(dichotic)
+dichotic$ID<-as.factor(dichotic$ID)
+```
+
+
+
+```{r}
+library(tidyr)
+
+#Make a factor for attend
+dichotic_long <- gather(dichotic, condition, measurement, neutral_right:attend_right_left, factor_key=TRUE)
+dichotic_long$attend<-'att_right'
+hest<-grep('^neutral',dichotic_long$condition)
+dichotic_long$attend[hest]<-'neutral'
+hest<-grep('attend_left',dichotic_long$condition)
+dichotic_long$attend[hest]<-'att_left'
+dichotic_long$attend<-as.factor(dichotic_long$attend)
+
+#Make a factor for left/right ear
+
+dichotic_long$ear='left'
+hest<-grep('^neutral_right',dichotic_long$condition)
+dichotic_long$ear[hest]='right'
+
+hest<-grep('right_right',dichotic_long$condition)
+dichotic_long$ear[hest]='right'
+
+hest<-grep('left_right',dichotic_long$condition)
+dichotic_long$ear[hest]='right'
+
+dichotic_long$ear<-as.factor(dichotic_long$ear)
+```
+
+
+```{r}
+library(ggplot2)
+
+# make a plot to visualise the data, for example by plotting RT on y-axix and emotional condition on x with colour being coded in colour
+
+ggplot(dichotic, aes(x=)
+
+```
+## The obvious model
+```{r}
+library(lme4)
+
+# create models to test your hypotheses - for example a model of 'ear' and 'attend' predicting words remembered 
+
+```
